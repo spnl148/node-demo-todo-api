@@ -31,20 +31,20 @@ app.get('/todos', (req, res) => {
 
 app.get('/todos/:id', (req, res) => {
     var id = req.params.id;
-    
+
     if (!ObjectID.isValid(id)) {
         return res.status(404).send("Invalid ID");
     }
-    Todo.find({_id:id}).then((todos) => {
-        if(todos.length === 0)
-            res.status(404).send();
-        else res.send(todos);
-    }).catch((e)=>{
+    Todo.findById({ _id: id }).then((todos) => {
+        if (!todos)
+          return  res.status(404).send();
+        else res.send({todos});
+    }).catch((e) => {
         res.status(400).send();
     })
 });
-app.listen(2200, () => {
-    console.log('Started on port 2200');
+app.listen(2300, () => {
+    console.log('Started on localhost:2300');
 });
 
 module.exports = { app };
