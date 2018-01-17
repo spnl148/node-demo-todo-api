@@ -75,3 +75,28 @@ describe('GET /todos/:id', () => {
             .end(done);
     }); 
 });
+
+describe('DELETE /todos/id:',() => {
+    var hexId = Data[0]._id.toHexString();
+    it('should remove a todo',(done) => {
+        request(app)
+            .delete(`/todos/${hexId}`)
+            .expect(200)
+            .end(done);
+    });
+
+    it('should return 404 if todo not found',(done) =>{
+        var hexId = new ObjectID().toHexString();
+        request(app)
+            .delete(`/todos/${hexId}`)
+            .expect(404)
+            .end(done);
+    });
+
+    it('should return 404 if object id is invalid',(done) => {
+        request(app)
+            .delete(`/todos/1123asd`)
+            .expect(404)
+            .end(done);
+    });
+});
