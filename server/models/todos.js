@@ -1,6 +1,6 @@
 var mongoose = require('mongoose');
 
-var Todo = mongoose.model('Todo', {
+var Todo = mongoose.model('todo', {
     text: {
         required: true,
         type: String,
@@ -17,4 +17,10 @@ var Todo = mongoose.model('Todo', {
     }
 });
 
-module.exports = {Todo};
+var User = mongoose.connect('users', {
+    email: {
+        type: String
+    }
+});
+
+module.exports = {Todo,User};

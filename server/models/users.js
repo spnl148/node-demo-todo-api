@@ -1,12 +1,9 @@
 var mongoose = require('mongoose');
 
-var User = mongoose.connect('User',{
-    email:{
-        type : String ,
-        required : true ,
-        minlength :1,
-        trim : true
+var User = mongoose.connect('User', {
+    email: {
+        type: String
     }
 });
 
-module.exports = {User};
+module.exports = { User };

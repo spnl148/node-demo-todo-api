@@ -5,8 +5,8 @@ const { app } = require('./../server');
 const { Todo } = require('./../models/todos');
 
 var Data = [
-    {"text" :"First test todo"},
-    {"text" :"Second test todo"}
+    { "text": "First test todo" },
+    { "text": "Second test todo" }
 ]
 beforeEach((done) => {
     Todo.remove({}).then(() => {
@@ -35,12 +35,12 @@ describe('POST /todos', () => {
     });
 });
 
-describe('GET /todos',() => {
-    it('should get all todos',(done) => {
+describe('GET /todos', () => {
+    it('should get all todos', (done) => {
         request(app)
             .get('/todos')
             .expect(200)
-            .expect((res) =>{
+            .expect((res) => {
                 expect(res.body.todos.length).toBe(3);
             })
             .end(done);
