@@ -63,7 +63,7 @@ app.patch('/todos/:id',(req,res) => {
     var id = req.params.id;
     var body = _.pick(req.body,['text','completed']);
     if(!ObjectID.isValid(id))
-        return res.status(404).send('Invalid ID');
+        return res.status(404).send();
 
     if(_.isBoolean(body.completed) && body.completed){
         body.completedAt = new Date().getTime();
@@ -75,7 +75,7 @@ app.patch('/todos/:id',(req,res) => {
 
     Todo.findByIdAndUpdate(id,{$set:body},{new:true}).then((todo) => {
         if(!todo)
-            return res.status(404).send('Record not found');
+            return res.status(404).send();
         
         res.send({todo});
     }).catch((e) => {
