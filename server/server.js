@@ -1,3 +1,5 @@
+require('./config/config');
+
 const express = require('express');
 const bodyParser = require('body-parser');
 const _ = require('lodash');
@@ -8,6 +10,7 @@ var { Todo } = require('./models/todos');
 var { User } = require('./models/users');
 
 var app = express();
+const port = process.env.PORT || 2300;
 
 app.use(bodyParser.json());
 app.post('/todos', (req, res) => {
@@ -47,7 +50,7 @@ app.get('/todos/:id', (req, res) => {
 
 app.delete('/todos/:id', (req, res) => {
     var id = req.params.id;
-    if (!ObjectID.isValid(id)){
+    if (!ObjectID.isValid(id)) {
         return res.status(404).send("Invalid ID");
     }
     Todo.findByIdAndRemove(id).then((todo) => {
@@ -59,33 +62,33 @@ app.delete('/todos/:id', (req, res) => {
     });
 });
 
-app.patch('/todos/:id',(req,res) => {
+app.patch('/todos/:id', (req, res) => {
     var id = req.params.id;
-    var body = _.pick(req.body,['text','completed']);
-    if(!ObjectID.isValid(id))
+    var body = _.pick(req.body, ['text', 'completed']);
+    if (!ObjectID.isValid(id))
         return res.status(404).send();
 
-    if(_.isBoolean(body.completed) && body.completed){
+    if (_.isBoolean(body.completed) && body.completed) {
         body.completedAt = new Date().getTime();
     }
-    else{
+    else {
         body.completedAt = null;
         body.completed = false;
     }
 
-    Todo.findByIdAndUpdate(id,{$set:body},{new:true}).then((todo) => {
-        if(!todo)
+    Todo.findByIdAndUpdate(id, { $set: body }, { new: true }).then((todo) => {
+        if (!todo)
             return res.status(404).send();
-        
-        res.send({todo});
+
+        res.send({ todo });
     }).catch((e) => {
         res.status(400).send();
     });
 
 });
 
-app.listen(2300, () => {
-    console.log('Started on localhost:2300');
+app.listen(port, () => {
+    console.log(`Started on localhost:${port}`);
 });
 
 module.exports = { app };
