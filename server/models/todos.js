@@ -1,4 +1,5 @@
-var mongoose = require('mongoose');
+const mongoose = require('mongoose');
+const validator = require('validator');
 
 var Todo = mongoose.model('todo', {
     text: {
@@ -12,15 +13,10 @@ var Todo = mongoose.model('todo', {
         default: false
     },
     completedAt: {
-        type : Number,
-        default : null
+        type: Number,
+        default: null
     }
 });
 
-var User = mongoose.connect('users', {
-    email: {
-        type: String
-    }
-});
 
-module.exports = {Todo,User};
+module.exports = { Todo };
