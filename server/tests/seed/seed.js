@@ -5,7 +5,6 @@ const jwt = require('jsonwebtoken');
 
 var userOneId = new ObjectID();
 var userTwoId = new ObjectID();
-
 var Data = [
     { _id: new ObjectID(), text: "First test todo", _creator: userOneId },
     { _id: new ObjectID(), text: "Second test todo", _creator: userTwoId, completed: true, completedAt: 123 }
@@ -18,7 +17,7 @@ const users = [
         password: 'abc111',
         tokens: [{
             access: 'auth',
-            token: jwt.sign({ _id: userOneId, access: 'auth' }, 'mine').toString()
+            token: jwt.sign({ _id: userOneId, access: 'auth' }, process.env.JWT_SECRET).toString()
         }]
     }, {
         _id: userTwoId,
@@ -26,7 +25,7 @@ const users = [
         password: 'abc222',
         tokens: [{
             access: 'auth',
-            token: jwt.sign({ _id: userTwoId, access: 'auth' }, 'mine').toString()
+            token: jwt.sign({ _id: userTwoId, access: 'auth' }, process.env.JWT_SECRET).toString()
         }]
     }
 ];
